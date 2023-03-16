@@ -9,11 +9,11 @@ mpiexec -n 8 \
     --image_size=512 \
     --batch_size=1 \
     --save_interval=10000 \
-    --log_dir=log/train # --resume_checkpoint=log/train/model030000.pt
+    --log_dir=log/train/$(date +%s) --resume_checkpoint=log/train/model240000.pt
 
 python3 scripts/image_sample.py \
   --num_samples=1 \
   --image_size=512 \
   --batch_size=1 \
-  --model_path=log/train/model020000.pt \
-  --log_dir=log/sample
+  --model_path=log/train/model240000.pt \
+  --log_dir=log/sample/$(date +%s)
