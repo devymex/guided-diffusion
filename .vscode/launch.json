@@ -1,0 +1,41 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "[py] sample",
+			"type": "python",
+			"request": "launch",
+			"program": "${workspaceFolder}/scripts/image_sample.py",
+			"env": {"PYTHONPATH": "${workspaceFolder}"},
+			"args": [
+				"--model_path=log/train/model040000.pt",
+				"--num_samples=1",
+				"--batch_size=1",
+				"--image_size=128",
+				"--log_dir=log/sample"
+			],
+			"console": "integratedTerminal",
+			"justMyCode": true
+		},
+		{
+			"name": "[py] train",
+			"type": "python",
+			"request": "launch",
+			"program": "${workspaceFolder}/scripts/image_train.py",
+			"env": {"PYTHONPATH": "${workspaceFolder}"},
+			"args": [
+				"--data_dir=/data/bzj_trash/images/green",
+				"--log_interval=100",
+				"--image_size=512",
+				"--batch_size=1",
+				"--save_interval=10000",
+				"--log_dir=log/train", //"--resume_checkpoint=log/train/model040000.pt"
+			],
+			"console": "integratedTerminal",
+			"justMyCode": true
+		}
+	]
+}
