@@ -124,6 +124,7 @@ class ImageDataset(Dataset):
 
 
 def center_crop_arr(pil_image, image_size):
+    return np.array(pil_image.resize((image_size, image_size)))
     # We are not on a new enough PIL to support the `reducing_gap`
     # argument, which uses BOX downsampling at powers of two first.
     # Thus, we do it by hand to improve downsample quality.
