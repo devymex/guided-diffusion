@@ -4,7 +4,15 @@ This is the codebase for [Diffusion Models Beat GANS on Image Synthesis](http://
 
 This repository is based on [openai/improved-diffusion](https://github.com/openai/improved-diffusion), with modifications for classifier conditioning and architecture improvements.
 
-# Download pre-trained models
+## 修改说明
+
+1. 修复了原版的一些 Bug ，支持了 MPI 启动的多卡训练，具体命令参见 `train.sh` 。
+2. 生成样本的命令示例参见 `train.sh`。
+3. 新增 `scripts/plot.py` ，用于将训练日志 `progress.csv` 绘制为图像，依赖 matplotlib 。该脚本含有一些可调节参数，详见代码。
+4. 新增 `scripts/npz2png.py` ，用于将生成的样本文件 samples_SHAPE.pnz 转换为 png 图像文件。
+5. 暂不支持多机训练。
+
+## Download pre-trained models
 
 We have released checkpoints for the main models in the paper. Before using these models, please review the corresponding [model card](model-card.md) to understand the intended use and limitations of these models.
 
@@ -26,7 +34,7 @@ Here are the download links for each model checkpoint:
  * LSUN horse: [lsun_horse.pt](https://openaipublic.blob.core.windows.net/diffusion/jul-2021/lsun_horse.pt)
  * LSUN horse (no dropout): [lsun_horse_nodropout.pt](https://openaipublic.blob.core.windows.net/diffusion/jul-2021/lsun_horse_nodropout.pt)
 
-# Sampling from pre-trained models
+## Sampling from pre-trained models
 
 To sample from these models, you can use the `classifier_sample.py`, `image_sample.py`, and `super_res_sample.py` scripts.
 Here, we provide flags for sampling from all of these models.
@@ -38,7 +46,7 @@ For these examples, we will generate 100 samples with batch size 4. Feel free to
 SAMPLE_FLAGS="--batch_size 4 --num_samples 100 --timestep_respacing 250"
 ```
 
-## Classifier guidance
+### Classifier guidance
 
 Note for these sampling runs that you can set `--classifier_scale 0` to sample from the base diffusion model.
 You may also use the `image_sample.py` script instead of `classifier_sample.py` in that case.
@@ -78,7 +86,7 @@ MODEL_FLAGS="--attention_resolutions 32,16,8 --class_cond True --diffusion_steps
 python classifier_sample.py $MODEL_FLAGS --classifier_scale 4.0 --classifier_path models/512x512_classifier.pt --model_path models/512x512_diffusion.pt $SAMPLE_FLAGS
 ```
 
-## Upsampling
+### Upsampling
 
 For these runs, we assume you have some base samples in a file `64_samples.npz` or `128_samples.npz` for the two respective models.
 
@@ -96,7 +104,7 @@ MODEL_FLAGS="--attention_resolutions 32,16 --class_cond True --diffusion_steps 1
 python super_res_sample.py $MODEL_FLAGS --model_path models/128_512_upsampler.pt $SAMPLE_FLAGS --base_samples 128_samples.npz
 ```
 
-## LSUN models
+### LSUN models
 
 These models are class-unconditional and correspond to a single LSUN class. Here, we show how to sample from `lsun_bedroom.pt`, but the other two LSUN checkpoints should work as well:
 
@@ -118,7 +126,7 @@ Note that for these models, the best samples result from using 1000 timesteps:
 SAMPLE_FLAGS="--batch_size 4 --num_samples 100 --timestep_respacing 1000"
 ```
 
-# Results
+## Results
 
 This table summarizes our ImageNet results for pure guided diffusion models:
 
@@ -144,7 +152,7 @@ Finally, here are the unguided results on individual LSUN classes:
 | LSUN Cat     | 5.57 | 0.63      | 0.52   |
 | LSUN Horse   | 2.57 | 0.71      | 0.55   |
 
-# Training models
+## Training models
 
 Training diffusion models is described in the [parent repository](https://github.com/openai/improved-diffusion). Training a classifier is similar. We assume you have put training hyperparameters into a `TRAIN_FLAGS` variable, and classifier hyperparameters into a `CLASSIFIER_FLAGS` variable. Then you can run:
 
