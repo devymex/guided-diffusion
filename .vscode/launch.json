@@ -5,20 +5,30 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "[py] my_sample",
+			"type": "python",
+			"request": "launch",
+			"program": "${workspaceFolder}/scripts/my_sample.py",
+			"env": {"PYTHONPATH": "${workspaceFolder}"},
+			"args": [],
+			"console": "integratedTerminal",
+			"justMyCode": false
+		},
+		{
 			"name": "[py] sample",
 			"type": "python",
 			"request": "launch",
 			"program": "${workspaceFolder}/scripts/image_sample.py",
 			"env": {"PYTHONPATH": "${workspaceFolder}"},
 			"args": [
-				"--model_path=log/train/model040000.pt",
+				"--model_path=log/train/1679383593/model550000.pt",
 				"--num_samples=1",
 				"--batch_size=1",
-				"--image_size=128",
+				"--image_size=512",
 				"--log_dir=log/sample"
 			],
 			"console": "integratedTerminal",
-			"justMyCode": true
+			"justMyCode": false
 		},
 		{
 			"name": "[py] train",
@@ -35,7 +45,7 @@
 				"--log_dir=log/train", //"--resume_checkpoint=log/train/model040000.pt"
 			],
 			"console": "integratedTerminal",
-			"justMyCode": true
+			"justMyCode": false
 		}
 	]
 }
