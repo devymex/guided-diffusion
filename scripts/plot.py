@@ -9,7 +9,7 @@ plot_size = [15, 10]
 saving_dpi = 200
 saving_format = '.png'
 showing = False
-param_norm_divisor = 10000 # None
+param_norm_divisor = 20000 # None
 
 df = pd.read_csv(input_file)
 df = df.drop(columns=['samples', 'step'])
