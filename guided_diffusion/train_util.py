@@ -158,8 +158,7 @@ class TrainLoop:
             if self.step % self.log_interval == 0:
                 logger.dumpkvs()
             if self.step % self.save_interval == 0 and self.step > 0:
-                if not self.resume_step or self.step > self.resume_step:
-                    self.save()
+                self.save()
                 # Run for a finite amount of time in integration tests.
                 if os.environ.get("DIFFUSION_TRAINING_TEST", "") and self.step > 0:
                     return
